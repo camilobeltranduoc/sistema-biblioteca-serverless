@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+
+  # Azure Function - Gestion de Usuarios (puerto interno 80)
+  usuarios-function:
+    build:
+      context: ./usuarios-function
+      dockerfile: Dockerfile
+    container_name: usuarios-function
+    ports:
+      - "7071:80"
+    environment:
+      - AzureWebJobsStorage=
+      - FUNCTIONS_WORKER_RUNTIME=java
+    networks:
+      - biblioteca-net
+
+  # Azure Function - Gestion de Prestamos (puerto interno 80)
+  prestamos-function:
+    build:
+      context: ./prestamos-function
+      dockerfile: Dockerfile
+    container_name: prestamos-function
+    ports:
+      - "7072:80"
+    environment:
+      - AzureWebJobsStorage=
+      - FUNCTIONS_WORKER_RUNTIME=java
+    networks:
+      - biblioteca-net
+
+  # Microservicio BFF - Orquestador Spring Boot (puerto 8080)
+  bff-service:
+    build:
+      context: ./bff-service
+      dockerfile: Dockerfile
+    container_name: bff-service
+    ports:
+      - "8080:8080"
+    environment:
+      - USUARIOS_URL=http://usuarios-function:80
+      - PRESTAMOS_URL=http://prestamos-function:80
+    depends_on:
+      - usuarios-function
+      - prestamos-function
+    networks:
+      - biblioteca-net
+
+networks:
+  biblioteca-net:
+    driver: bridge
