@@ -1,0 +1,134 @@
+{
+  "info": {
+    "name": "Sistema Biblioteca Serverless",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "bff_url",
+      "value": "https://bff-biblioteca-app.azurewebsites.net"
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Listar Usuarios",
+          "request": {
+            "method": "GET",
+            "url": "{{bff_url}}/api/usuarios"
+          }
+        },
+        {
+          "name": "Obtener Usuario por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{bff_url}}/api/usuarios/1"
+          }
+        },
+        {
+          "name": "Crear Usuario",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/usuarios",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pedro\",\n  \"apellido\": \"Soto\",\n  \"email\": \"pedro.soto@correo.cl\",\n  \"rut\": \"15987654-3\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar Usuario",
+          "request": {
+            "method": "PUT",
+            "url": "{{bff_url}}/api/usuarios/4",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pedro\",\n  \"apellido\": \"Soto Ramirez\",\n  \"email\": \"pedro.soto@correo.cl\",\n  \"rut\": \"15987654-3\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Eliminar Usuario",
+          "request": {
+            "method": "DELETE",
+            "url": "{{bff_url}}/api/usuarios/4"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prestamos",
+      "item": [
+        {
+          "name": "Listar Prestamos",
+          "request": {
+            "method": "GET",
+            "url": "{{bff_url}}/api/prestamos"
+          }
+        },
+        {
+          "name": "Obtener Prestamo por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{bff_url}}/api/prestamos/1"
+          }
+        },
+        {
+          "name": "Crear Prestamo",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/prestamos",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"tituloLibro\": \"Clean Architecture\",\n  \"autor\": \"Robert C. Martin\",\n  \"fechaPrestamo\": \"2024-03-29\",\n  \"fechaDevolucion\": null,\n  \"estado\": \"ACTIVO\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar Prestamo",
+          "request": {
+            "method": "PUT",
+            "url": "{{bff_url}}/api/prestamos/4",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"tituloLibro\": \"Clean Architecture\",\n  \"autor\": \"Robert C. Martin\",\n  \"fechaPrestamo\": \"2024-03-29\",\n  \"fechaDevolucion\": \"2024-04-15\",\n  \"estado\": \"DEVUELTO\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Eliminar Prestamo",
+          "request": {
+            "method": "DELETE",
+            "url": "{{bff_url}}/api/prestamos/4"
+          }
+        }
+      ]
+    }
+  ]
+}

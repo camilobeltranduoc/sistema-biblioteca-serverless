@@ -23,7 +23,7 @@ public class DatabaseManager {
                     ")"
                 );
 
-                // Datos iniciales para el demo
+
                 try { stmt.execute("INSERT INTO usuarios (nombre,apellido,email,rut) VALUES ('Juan','Gonzalez','juan.gonzalez@correo.cl','12345678-9')"); } catch (Exception ignored) {}
                 try { stmt.execute("INSERT INTO usuarios (nombre,apellido,email,rut) VALUES ('Maria','Lopez','maria.lopez@correo.cl','98765432-1')"); } catch (Exception ignored) {}
                 try { stmt.execute("INSERT INTO usuarios (nombre,apellido,email,rut) VALUES ('Carlos','Ramirez','carlos.ramirez@correo.cl','11223344-5')"); } catch (Exception ignored) {}

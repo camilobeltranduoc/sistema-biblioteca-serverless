@@ -25,7 +25,7 @@ public class DatabaseManager {
                     ")"
                 );
 
-                // Datos iniciales para el demo
+
                 try { stmt.execute("INSERT INTO prestamos (usuario_id,titulo_libro,autor,fecha_prestamo,fecha_devolucion,estado) VALUES (1,'Clean Code','Robert C. Martin','2024-03-01',NULL,'ACTIVO')"); } catch (Exception ignored) {}
                 try { stmt.execute("INSERT INTO prestamos (usuario_id,titulo_libro,autor,fecha_prestamo,fecha_devolucion,estado) VALUES (2,'The Pragmatic Programmer','David Thomas','2024-02-15','2024-03-01','DEVUELTO')"); } catch (Exception ignored) {}
                 try { stmt.execute("INSERT INTO prestamos (usuario_id,titulo_libro,autor,fecha_prestamo,fecha_devolucion,estado) VALUES (1,'Design Patterns','Gang of Four','2024-03-10',NULL,'ACTIVO')"); } catch (Exception ignored) {}

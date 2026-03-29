@@ -17,7 +17,6 @@ public class PrestamosFunction {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    // ─── GET /prestamos ───────────────────────────────────────────────────────
     @FunctionName("listarPrestamos")
     public HttpResponseMessage listar(
             @HttpTrigger(name = "req",
@@ -49,7 +48,6 @@ public class PrestamosFunction {
         }
     }
 
-    // ─── GET /prestamos/{id} ──────────────────────────────────────────────────
     @FunctionName("obtenerPrestamo")
     public HttpResponseMessage obtener(
             @HttpTrigger(name = "req",
@@ -84,7 +82,6 @@ public class PrestamosFunction {
         }
     }
 
-    // ─── POST /prestamos ──────────────────────────────────────────────────────
     @FunctionName("crearPrestamo")
     public HttpResponseMessage crear(
             @HttpTrigger(name = "req",
@@ -133,7 +130,6 @@ public class PrestamosFunction {
         }
     }
 
-    // ─── PUT /prestamos/{id} ──────────────────────────────────────────────────
     @FunctionName("actualizarPrestamo")
     public HttpResponseMessage actualizar(
             @HttpTrigger(name = "req",
@@ -182,7 +178,6 @@ public class PrestamosFunction {
         }
     }
 
-    // ─── DELETE /prestamos/{id} ───────────────────────────────────────────────
     @FunctionName("eliminarPrestamo")
     public HttpResponseMessage eliminar(
             @HttpTrigger(name = "req",
@@ -212,7 +207,6 @@ public class PrestamosFunction {
         }
     }
 
-    // ─── Helpers ──────────────────────────────────────────────────────────────
     private Map<String, Object> mapRow(ResultSet rs) throws SQLException {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("id",              rs.getLong("id"));

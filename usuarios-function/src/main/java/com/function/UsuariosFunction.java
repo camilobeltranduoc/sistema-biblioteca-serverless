@@ -13,7 +13,6 @@ public class UsuariosFunction {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    // ─── GET /usuarios ────────────────────────────────────────────────────────
     @FunctionName("listarUsuarios")
     public HttpResponseMessage listar(
             @HttpTrigger(name = "req",
@@ -45,7 +44,6 @@ public class UsuariosFunction {
         }
     }
 
-    // ─── GET /usuarios/{id} ───────────────────────────────────────────────────
     @FunctionName("obtenerUsuario")
     public HttpResponseMessage obtener(
             @HttpTrigger(name = "req",
@@ -79,7 +77,6 @@ public class UsuariosFunction {
         }
     }
 
-    // ─── POST /usuarios ───────────────────────────────────────────────────────
     @FunctionName("crearUsuario")
     public HttpResponseMessage crear(
             @HttpTrigger(name = "req",
@@ -124,7 +121,6 @@ public class UsuariosFunction {
         }
     }
 
-    // ─── PUT /usuarios/{id} ───────────────────────────────────────────────────
     @FunctionName("actualizarUsuario")
     public HttpResponseMessage actualizar(
             @HttpTrigger(name = "req",
@@ -169,7 +165,6 @@ public class UsuariosFunction {
         }
     }
 
-    // ─── DELETE /usuarios/{id} ────────────────────────────────────────────────
     @FunctionName("eliminarUsuario")
     public HttpResponseMessage eliminar(
             @HttpTrigger(name = "req",
@@ -183,8 +178,7 @@ public class UsuariosFunction {
         context.getLogger().info("Eliminar usuario id=" + id);
 
         try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "DELETE FROM usuarios WHERE id=?")) {
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM usuarios WHERE id=?")) {
 
             stmt.setLong(1, id);
             if (stmt.executeUpdate() == 0) {
@@ -199,7 +193,6 @@ public class UsuariosFunction {
         }
     }
 
-    // ─── Helpers ──────────────────────────────────────────────────────────────
     private Map<String, Object> mapRow(ResultSet rs) throws SQLException {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("id",       rs.getLong("id"));
