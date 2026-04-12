@@ -11,7 +11,7 @@
   ],
   "item": [
     {
-      "name": "Usuarios",
+      "name": "Usuarios - REST (via BFF)",
       "item": [
         {
           "name": "Listar Usuarios",
@@ -32,12 +32,7 @@
           "request": {
             "method": "POST",
             "url": "{{bff_url}}/api/usuarios",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Pedro\",\n  \"apellido\": \"Soto\",\n  \"email\": \"pedro.soto@correo.cl\",\n  \"rut\": \"15987654-3\"\n}"
@@ -49,12 +44,7 @@
           "request": {
             "method": "PUT",
             "url": "{{bff_url}}/api/usuarios/4",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Pedro\",\n  \"apellido\": \"Soto Ramirez\",\n  \"email\": \"pedro.soto@correo.cl\",\n  \"rut\": \"15987654-3\"\n}"
@@ -71,7 +61,7 @@
       ]
     },
     {
-      "name": "Prestamos",
+      "name": "Prestamos - REST (via BFF)",
       "item": [
         {
           "name": "Listar Prestamos",
@@ -92,12 +82,7 @@
           "request": {
             "method": "POST",
             "url": "{{bff_url}}/api/prestamos",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"usuarioId\": 1,\n  \"tituloLibro\": \"Clean Architecture\",\n  \"autor\": \"Robert C. Martin\",\n  \"fechaPrestamo\": \"2024-03-29\",\n  \"fechaDevolucion\": null,\n  \"estado\": \"ACTIVO\"\n}"
@@ -109,12 +94,7 @@
           "request": {
             "method": "PUT",
             "url": "{{bff_url}}/api/prestamos/4",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{"key": "Content-Type", "value": "application/json"}],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"usuarioId\": 1,\n  \"tituloLibro\": \"Clean Architecture\",\n  \"autor\": \"Robert C. Martin\",\n  \"fechaPrestamo\": \"2024-03-29\",\n  \"fechaDevolucion\": \"2024-04-15\",\n  \"estado\": \"DEVUELTO\"\n}"
@@ -126,6 +106,160 @@
           "request": {
             "method": "DELETE",
             "url": "{{bff_url}}/api/prestamos/4"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Libros - GraphQL (via BFF)",
+      "item": [
+        {
+          "name": "Query - Listar Libros",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/libros/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"{ libros { id titulo autor isbn genero disponible } }\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Query - Obtener Libro por ID",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/libros/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"{ libro(id: \\\"1\\\") { id titulo autor isbn genero disponible } }\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Query - Libros por Genero",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/libros/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"{ librosPorGenero(genero: \\\"Programacion\\\") { id titulo autor disponible } }\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation - Crear Libro",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/libros/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation CrearLibro($input: LibroInput!) { crearLibro(input: $input) { id titulo autor isbn genero disponible } }\",\n  \"variables\": {\n    \"input\": {\n      \"titulo\": \"Refactoring\",\n      \"autor\": \"Martin Fowler\",\n      \"isbn\": \"978-0134757599\",\n      \"genero\": \"Programacion\",\n      \"disponible\": true\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation - Actualizar Libro",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/libros/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ActualizarLibro($id: ID!, $input: LibroInput!) { actualizarLibro(id: $id, input: $input) { id titulo disponible } }\",\n  \"variables\": {\n    \"id\": \"5\",\n    \"input\": {\n      \"titulo\": \"Refactoring\",\n      \"autor\": \"Martin Fowler\",\n      \"isbn\": \"978-0134757599\",\n      \"genero\": \"Programacion\",\n      \"disponible\": false\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation - Eliminar Libro",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/libros/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation { eliminarLibro(id: \\\"5\\\") }\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reservas - GraphQL (via BFF)",
+      "item": [
+        {
+          "name": "Query - Listar Reservas",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/reservas/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"{ reservas { id usuarioId tituloLibro fechaReserva fechaVencimiento estado } }\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Query - Obtener Reserva por ID",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/reservas/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"{ reserva(id: \\\"1\\\") { id usuarioId tituloLibro fechaReserva fechaVencimiento estado } }\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Query - Reservas por Estado ACTIVA",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/reservas/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"{ reservasPorEstado(estado: \\\"ACTIVA\\\") { id usuarioId tituloLibro fechaVencimiento } }\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation - Crear Reserva",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/reservas/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation CrearReserva($input: ReservaInput!) { crearReserva(input: $input) { id usuarioId tituloLibro fechaReserva fechaVencimiento estado } }\",\n  \"variables\": {\n    \"input\": {\n      \"usuarioId\": 2,\n      \"tituloLibro\": \"The Pragmatic Programmer\",\n      \"fechaReserva\": \"2026-04-12\",\n      \"fechaVencimiento\": \"2026-04-19\",\n      \"estado\": \"ACTIVA\"\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation - Actualizar Reserva",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/reservas/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ActualizarReserva($id: ID!, $input: ReservaInput!) { actualizarReserva(id: $id, input: $input) { id estado } }\",\n  \"variables\": {\n    \"id\": \"4\",\n    \"input\": {\n      \"usuarioId\": 2,\n      \"tituloLibro\": \"The Pragmatic Programmer\",\n      \"fechaReserva\": \"2026-04-12\",\n      \"fechaVencimiento\": \"2026-04-19\",\n      \"estado\": \"EXPIRADA\"\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation - Eliminar Reserva",
+          "request": {
+            "method": "POST",
+            "url": "{{bff_url}}/api/reservas/graphql",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation { eliminarReserva(id: \\\"4\\\") }\"\n}"
+            }
           }
         }
       ]

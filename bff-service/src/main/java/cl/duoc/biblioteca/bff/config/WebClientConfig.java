@@ -14,6 +14,12 @@ public class WebClientConfig {
     @Value("${prestamos.service.url}")
     private String prestamosUrl;
 
+    @Value("${usuarios.graphql.url}")
+    private String usuariosGraphqlUrl;
+
+    @Value("${prestamos.graphql.url}")
+    private String prestamosGraphqlUrl;
+
     @Bean("usuariosClient")
     public WebClient usuariosClient() {
         return WebClient.builder()
@@ -25,6 +31,20 @@ public class WebClientConfig {
     public WebClient prestamosClient() {
         return WebClient.builder()
                 .baseUrl(prestamosUrl)
+                .build();
+    }
+
+    @Bean("usuariosGraphqlClient")
+    public WebClient usuariosGraphqlClient() {
+        return WebClient.builder()
+                .baseUrl(usuariosGraphqlUrl)
+                .build();
+    }
+
+    @Bean("prestamosGraphqlClient")
+    public WebClient prestamosGraphqlClient() {
+        return WebClient.builder()
+                .baseUrl(prestamosGraphqlUrl)
                 .build();
     }
 }

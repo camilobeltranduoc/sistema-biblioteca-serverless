@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
 
-  # Azure Function - Gestion de Usuarios (puerto interno 80)
+  # Azure Function REST - Gestion de Usuarios (puerto interno 80)
   usuarios-function:
     build:
       context: ./usuarios-function
@@ -16,7 +16,7 @@ services:
     networks:
       - biblioteca-net
 
-  # Azure Function - Gestion de Prestamos (puerto interno 80)
+  # Azure Function REST - Gestion de Prestamos (puerto interno 80)
   prestamos-function:
     build:
       context: ./prestamos-function
@@ -24,6 +24,34 @@ services:
     container_name: prestamos-function
     ports:
       - "7072:80"
+    environment:
+      - AzureWebJobsStorage=
+      - FUNCTIONS_WORKER_RUNTIME=java
+    networks:
+      - biblioteca-net
+
+  # Azure Function GraphQL - Usuarios (puerto interno 80)
+  usuarios-graphql-function:
+    build:
+      context: ./usuarios-graphql-function
+      dockerfile: Dockerfile
+    container_name: usuarios-graphql-function
+    ports:
+      - "7073:80"
+    environment:
+      - AzureWebJobsStorage=
+      - FUNCTIONS_WORKER_RUNTIME=java
+    networks:
+      - biblioteca-net
+
+  # Azure Function GraphQL - Prestamos (puerto interno 80)
+  prestamos-graphql-function:
+    build:
+      context: ./prestamos-graphql-function
+      dockerfile: Dockerfile
+    container_name: prestamos-graphql-function
+    ports:
+      - "7074:80"
     environment:
       - AzureWebJobsStorage=
       - FUNCTIONS_WORKER_RUNTIME=java
@@ -41,9 +69,13 @@ services:
     environment:
       - USUARIOS_URL=http://usuarios-function:80
       - PRESTAMOS_URL=http://prestamos-function:80
+      - USUARIOS_GRAPHQL_URL=http://usuarios-graphql-function:80
+      - PRESTAMOS_GRAPHQL_URL=http://prestamos-graphql-function:80
     depends_on:
       - usuarios-function
       - prestamos-function
+      - usuarios-graphql-function
+      - prestamos-graphql-function
     networks:
       - biblioteca-net
 

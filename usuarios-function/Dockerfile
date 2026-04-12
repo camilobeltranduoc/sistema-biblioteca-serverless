@@ -14,5 +14,5 @@ ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
     AzureFunctionsJobHost__Logging__Console__IsEnabled=true \
     AzureWebJobsStorage="" \
     FUNCTIONS_WORKER_RUNTIME=java
-COPY --from=build /app/target/azure-functions/usuarios-function/ /home/site/wwwroot
+COPY --from=build /app/target/azure-functions/usuarios-function-app/ /home/site/wwwroot
 EXPOSE 80
